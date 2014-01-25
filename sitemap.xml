@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
+    <url>
+        <loc>http://tomv564.github.io/blog/2013/12/14/ruby-rspec-and-git-a-guessing-game/</loc>
+        <lastmod>2014-01-25T13:57:51+01:00</lastmod>
+    </url>
+    <url>
+        <loc>http://tomv564.github.io/archives/</loc>
+        <lastmod>2014-01-25T13:57:51+01:00</lastmod>
+    </url>
+    <url>
+        <loc>http://tomv564.github.io/blog/archives/</loc>
+        <lastmod>2014-01-25T13:57:51+01:00</lastmod>
+    </url>
+    <url>
+        <loc>http://tomv564.github.io/</loc>
+        <lastmod>2014-01-25T13:57:51+01:00</lastmod>
+    </url>
+</urlset>
