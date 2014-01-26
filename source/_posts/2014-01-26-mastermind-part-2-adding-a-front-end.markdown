@@ -139,6 +139,10 @@ Mastermind = new function() {
 
 ```
 
-It is based on [Crockford's private members in Javascript](http://javascript.crockford.com/private.html) and helps keep your objects tight and neat.
+It is based on [Crockford's private members in Javascript](http://javascript.crockford.com/private.html) and helps keep your objects tight and neat. 
+
+Filling in the details is a mix of DOM manipulation using JQuery and lots of trial-and-error. See the [complete javascript](https://github.com/tomv564/mastermind/blob/d01d3bf8de635b97462c6aa7060f7b679a6f37ef/js/app.js) for some ideas.
+
+The front end implementation is deliberately dumb - it should only allow picking colors and submitting guesses. The game logic will be hooked up in the next step, when we convert our Ruby class into a web app.
 
 The implementation at this point can be seen at [this commit in GitHub](https://github.com/tomv564/mastermind/tree/d01d3bf8de635b97462c6aa7060f7b679a6f37ef)
