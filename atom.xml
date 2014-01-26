@@ -4,7 +4,7 @@
   <title><![CDATA[Tom van Ommeren's blog]]></title>
   <link href="http://tomv564.github.io/atom.xml" rel="self"/>
   <link href="http://tomv564.github.io/"/>
-  <updated>2014-01-26T17:17:05+01:00</updated>
+  <updated>2014-01-26T18:30:32+01:00</updated>
   <id>http://tomv564.github.io/</id>
   <author>
     <name><![CDATA[Tom van Ommeren]]></name>
@@ -12,6 +12,270 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MasterMind Part 3: A web app]]></title>
+    <link href="http://tomv564.github.io/blog/2014/01/26/mastermind-part-3-a-web-app/"/>
+    <updated>2014-01-26T17:23:40+01:00</updated>
+    <id>http://tomv564.github.io/blog/2014/01/26/mastermind-part-3-a-web-app</id>
+    <content type="html"><![CDATA[<p>So you have tested server logic in Ruby, and a working front-end prototype. What is the easiest way to hook them up?</p>
+
+<p>I had some experience with <a href="http://rubyonrails.org/">Ruby on Rails</a> so I first generated a rails app to handle the backend. A large directory structure filled with boilerplate appeared, Turbolinks broke my event handlers, and I decided a microframework like <a href="http://www.sinatrarb.com">Sinatra</a> was much better suited to the task.</p>
+
+<h3>Install sinatra</h3>
+
+<p>Run this in your project directory</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install sinatra</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Move your frontend</h3>
+
+<p>Sinatra expects all your HTML, CSS and javascript to live in a subfolder named <em>public</em>.</p>
+
+<ul>
+<li>public (index.html)
+
+<ul>
+<li>js (app.js, jquery.min.js, bootstrap.min.js)</li>
+<li>css (app.css, bootstrap.css)</li>
+<li>fonts (Bootstrap glyphicons)</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Create a controller.rb in the root to serve it all up</h3>
+
+<figure class='code'><figcaption><span>controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;sinatra&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;json&#39;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">get</span> <span class="s1">&#39;/&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">redirect</span> <span class="s1">&#39;/index.html&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And fire it up using</p>
+
+<figure class='code'><figcaption><span>controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">ruby</span> <span class="n">controller</span><span class="o">.</span><span class="n">rb</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Webrick should be fired up and serving index.html on <a href="http://localhost:4567/">http://localhost:4567/</a></p>
+
+<h3>Add the New Game action</h3>
+
+<p>How do we keep the multiple games running on the server apart?</p>
+
+<p>Add the <em>securerandom</em> gem, and add a read-only id property on our Game object:</p>
+
+<figure class='code'><figcaption><span>game.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;securerandom&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Game</span>
+</span><span class='line'>    <span class="vi">@answer</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>    <span class="kp">attr_reader</span> <span class="ss">:id</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">validate_code</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@answer</span> <span class="o">=</span> <span class="n">answer</span>
+</span><span class='line'>      <span class="vi">@id</span> <span class="o">=</span> <span class="no">SecureRandom</span><span class="o">.</span><span class="n">hex</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We need to store this game object between requests, and we&rsquo;re not going to use a database for this. Instead, we&rsquo;ll set up a hash in Sinatra&rsquo;s configuration when the app loads:</p>
+
+<figure class='code'><figcaption><span>controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">require_relative</span> <span class="s1">&#39;game&#39;</span>
+</span><span class='line'><span class="n">require_relative</span> <span class="s1">&#39;generator&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">configure</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">set</span> <span class="ss">:games</span><span class="p">,</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In your app.js, your reset function should request a new game:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/game&#39;</span><span class="p">,</span> <span class="nx">onGameCreated</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Your server creates, stores and returns the new game:</p>
+
+<figure class='code'><figcaption><span>controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">post</span> <span class="s1">&#39;/game&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="c1"># create a new game</span>
+</span><span class='line'>  <span class="n">answer</span> <span class="o">=</span> <span class="no">Generator</span><span class="o">.</span><span class="n">generate</span>
+</span><span class='line'>  <span class="n">game</span> <span class="o">=</span> <span class="no">Game</span><span class="o">.</span><span class="n">new</span> <span class="n">answer</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># store the game to be looked up by id</span>
+</span><span class='line'>  <span class="n">settings</span><span class="o">.</span><span class="n">games</span><span class="o">[</span><span class="n">game</span><span class="o">.</span><span class="n">id</span><span class="o">]</span> <span class="o">=</span> <span class="n">game</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># tell Sinatra we are speaking JSON</span>
+</span><span class='line'>  <span class="n">content_type</span> <span class="ss">:json</span>
+</span><span class='line'>  <span class="n">game</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">to_json</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Back on the client, your onGameCreated function should extract the id and store it for future requests</p>
+
+<figure class='code'><figcaption><span>app.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">gameId</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">onGameCreated</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">gameId</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Restart your sinatra host, and you should see an AJAX request going out to your server as soon as the page hits your reset() method.</p>
+
+<h3>Add the Guess action</h3>
+
+<p>Once the player has selected four colors I allow then to submit the guess. See here the use of gameId, and colors is passed as an array in the POST payload.</p>
+
+<figure class='code'><figcaption><span>app.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/game/&#39;</span> <span class="o">+</span> <span class="nx">gameId</span> <span class="o">+</span> <span class="s1">&#39;/guesses&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;colors[]&#39;</span><span class="o">:</span> <span class="nx">colors</span><span class="p">}).</span><span class="nx">done</span><span class="p">(</span><span class="nx">onGuessAdded</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Your web handler should look something like this:</p>
+
+<figure class='code'><figcaption><span>controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">post</span> <span class="s1">&#39;/game/:id/guesses&#39;</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1"># find the game</span>
+</span><span class='line'>        <span class="n">game</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">games</span><span class="o">[</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]]</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1"># parse the parameters (convert to symbols)</span>
+</span><span class='line'>        <span class="n">colors</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:colors</span><span class="o">]</span>
+</span><span class='line'>        <span class="n">guess</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">c</span><span class="o">.</span><span class="n">to_sym</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1"># add a guess</span>
+</span><span class='line'>        <span class="n">score</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">guess</span> <span class="n">guess</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1"># return the score</span>
+</span><span class='line'>        <span class="n">content_type</span> <span class="ss">:json</span>
+</span><span class='line'>        <span class="n">score</span><span class="o">.</span><span class="n">to_json</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Things I think are great about this code:</p>
+
+<ul>
+<li>You can pull params from the requested URL or the postdata</li>
+<li>The RESTful method signature is very descriptive: Post this guess to the guesses of the game identified by id.</li>
+</ul>
+
+
+<p>Only the converting of strings to symbols is a bit unproductive.</p>
+
+<h3>Deploy to a server</h3>
+
+<p>Because I don&rsquo;t want to set up my own server, and Platform-as-a-Service providers often have restricted free accounts, we will deploy the app to <a href="http://www.heroku.com/">Heroku</a>.</p>
+
+<p>Their <a href="https://devcenter.heroku.com/articles/quickstart">Getting Started</a> page walks you through signing up, installing the client tools and deployment. Once you&rsquo;re ready to deploy, check the rest of this blog post.</p>
+
+<p>Using their <a href="https://devcenter.heroku.com/articles/rack">instructions for Rack apps</a> we will set up the Gemfile and config.ru in the root:</p>
+
+<figure class='code'><figcaption><span>Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">source</span> <span class="s1">&#39;https://rubygems.org&#39;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s2">&quot;bundler&quot;</span>  <span class="p">,</span> <span class="s2">&quot;~&gt; 1.3.5&quot;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s2">&quot;rspec&quot;</span>    <span class="p">,</span> <span class="s2">&quot;~&gt; 2.14.1&quot;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s2">&quot;sinatra&quot;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s2">&quot;securerandom&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>config.ru</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;./controller&#39;</span>
+</span><span class='line'><span class="n">run</span> <span class="ss">Sinatra</span><span class="p">:</span><span class="ss">:Application</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should have run heroku login at this point, so we are ready to create and deploy the app using a git push:</p>
+
+<figure class='code'><figcaption><span>config.ru</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">heroku</span> <span class="n">create</span>
+</span><span class='line'><span class="n">git</span> <span class="n">push</span> <span class="n">heroku</span> <span class="n">master</span>
+</span><span class='line'><span class="n">heroku</span> <span class="nb">open</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should be up and running! The free Heroku instances tend to go to sleep every once in awhile.
+If the app is still running, the url is at: <a href="http://tomv-mastermind.herokuapp.com">Tom&rsquo;s MasterMind</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MasterMind Part 2: Adding a front end]]></title>
@@ -250,6 +514,10 @@
 
 
 <p>It is based on <a href="http://javascript.crockford.com/private.html">Crockford&rsquo;s private members in Javascript</a> and helps keep your objects tight and neat.</p>
+
+<p>Filling in the details is a mix of DOM manipulation using JQuery and lots of trial-and-error. See the <a href="https://github.com/tomv564/mastermind/blob/d01d3bf8de635b97462c6aa7060f7b679a6f37ef/js/app.js">complete javascript</a> for some ideas.</p>
+
+<p>The front end implementation is deliberately dumb &ndash; it should only allow picking colors and submitting guesses. The game logic will be hooked up in the next step, when we convert our Ruby class into a web app.</p>
 
 <p>The implementation at this point can be seen at <a href="https://github.com/tomv564/mastermind/tree/d01d3bf8de635b97462c6aa7060f7b679a6f37ef">this commit in GitHub</a></p>
 ]]></content>
