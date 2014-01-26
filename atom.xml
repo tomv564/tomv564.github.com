@@ -4,7 +4,7 @@
   <title><![CDATA[Tom van Ommeren's blog]]></title>
   <link href="http://tomv564.github.io/atom.xml" rel="self"/>
   <link href="http://tomv564.github.io/"/>
-  <updated>2014-01-25T14:16:30+01:00</updated>
+  <updated>2014-01-26T17:17:05+01:00</updated>
   <id>http://tomv564.github.io/</id>
   <author>
     <name><![CDATA[Tom van Ommeren]]></name>
@@ -14,23 +14,262 @@
 
   
   <entry>
+    <title type="html"><![CDATA[MasterMind Part 2: Adding a front end]]></title>
+    <link href="http://tomv564.github.io/blog/2014/01/26/mastermind-part-2-adding-a-front-end/"/>
+    <updated>2014-01-26T16:31:49+01:00</updated>
+    <id>http://tomv564.github.io/blog/2014/01/26/mastermind-part-2-adding-a-front-end</id>
+    <content type="html"><![CDATA[<p>The <a href="http://tomv564.github.io/blog/2013/12/14/ruby-rspec-and-git-a-guessing-game/">previous post</a> was an exercise in building well-tested logic. To turn this in to a workable application, two things need to happen:</p>
+
+<ol>
+<li>A front-end needs to be built</li>
+<li>The back-end needs to be hosted in a web app</li>
+</ol>
+
+
+<p>In fact, you could build the whole thing as a front-end app, but then you would miss out on building a minimalistic Ruby web app.</p>
+
+<p>So, let&rsquo;s mock up a front end in <a href="http://www.balsamiq.com/">Balsamiq</a>.</p>
+
+<p><img src="https://raw2.github.com/tomv564/mastermind/master/mockup.png" alt="mockup" /></p>
+
+<h3>HTML template</h3>
+
+<p>Because I don&rsquo;t want to work hard to get pretty fonts and buttons, <a href="http://getbootstrap.com">download Bootstrap</a> and use their basic html template.</p>
+
+<p>The board is made up of nested lists, the markup looks roughly like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;board&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;answer&quot;</span> <span class="na">class=</span><span class="s">&quot;code list-unstyled&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;li&gt;</span>?<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;li&gt;</span>?<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;li&gt;</span>?<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;li&gt;</span>?<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;guesses&quot;</span> <span class="na">class=</span><span class="s">&quot;list-unstyled&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;code list-unstyled&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;score list-unstyled&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;black&quot;</span><span class="nt">&gt;</span><span class="ni">&amp;nbsp;</span><span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;white&quot;</span><span class="nt">&gt;</span><span class="ni">&amp;nbsp;</span><span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;white&quot;</span><span class="nt">&gt;</span><span class="ni">&amp;nbsp;</span><span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;addguess&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;code list-unstyled&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;addguessbutton&quot;</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-xs btn-primary&quot;</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">&quot;glyphicon glyphicon-ok&quot;</span><span class="nt">&gt;&lt;/span&gt;&lt;/button&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;turns&quot;</span> <span class="na">class=</span><span class="s">&quot;list-unstyled&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;code list-unstyled&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;code list-unstyled&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;&lt;/li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The following CSS turns those list items into circles:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">ul</span><span class="nc">.code</span> <span class="nt">li</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">float</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">border</span><span class="o">:</span> <span class="m">2px</span> <span class="k">solid</span> <span class="m">#999</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">margin-left</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">width</span><span class="o">:</span> <span class="m">30px</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">height</span><span class="o">:</span> <span class="m">28px</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Tying it together: the javascript</h3>
+
+<p>To encapsulate the logic for the whole page, I started with this basic pattern:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Mastermind</span> <span class="o">=</span> <span class="k">new</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// private variables</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">selectedPeg</span><span class="p">;</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">lastGuess</span><span class="p">;</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">gameId</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// private functions </span>
+</span><span class='line'>
+</span><span class='line'>          <span class="kd">var</span> <span class="nx">addGuess</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">reset</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// first load: attach handlers and reset game.</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#newgamebutton&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="nx">reset</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#addguessbutton&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="nx">addGuess</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">reset</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>                <span class="c1">// public functions and variables</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It is based on <a href="http://javascript.crockford.com/private.html">Crockford&rsquo;s private members in Javascript</a> and helps keep your objects tight and neat.</p>
+
+<p>The implementation at this point can be seen at <a href="https://github.com/tomv564/mastermind/tree/d01d3bf8de635b97462c6aa7060f7b679a6f37ef">this commit in GitHub</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Ruby, rspec and git, a guessing game]]></title>
     <link href="http://tomv564.github.io/blog/2013/12/14/ruby-rspec-and-git-a-guessing-game/"/>
     <updated>2013-12-14T00:00:00+01:00</updated>
     <id>http://tomv564.github.io/blog/2013/12/14/ruby-rspec-and-git-a-guessing-game</id>
     <content type="html"><![CDATA[<p>Let&rsquo;s make a game. Better yet, let&rsquo;s copy one. Let&rsquo;s implement <a href="http://en.wikipedia.org/wiki/Mastermind_(board_game">MasterMind</a> in Ruby.</p>
 
-<p>The living project for this series is on <a href="https://github.com/tomv564/mastermind">my GitHub</a></p>
+<p>The living project for this article is on <a href="https://github.com/tomv564/mastermind">GitHub</a></p>
 
 <h3>Prep</h3>
 
 <p>First, set up a ruby on your machine using <a href="http://railsapps.github.io/installrubyonrails-mac.html">this guide</a> about RVM.</p>
 
-<p>You&rsquo;ll also want an editor, I&rsquo;m trying <a href="http://www.sublimetext.com">Sublime Text</a>.</p>
-
-<p>Create an empty class, we&rsquo;ll call it game.rb.</p>
-
-<p>Before writing any code, we&rsquo;re going to write a test. This is called Test Driven Development, and it helps you write lean, reliable code. I used RSpec, but you might consider TestUnit instead for such a simple app.</p>
+<p>Create an empty class, we&rsquo;ll call it game.rb.
+For Ruby, RSpec and TestUnit are popular. We&rsquo;ll use RSpec for now:</p>
 
 <p>First, install the rspec gem:</p>
 
@@ -56,12 +295,16 @@ end</code></pre>
 </div>
 
 
-<p>This file tells RSpec
-1. Load a Ruby object called <em>game</em> from the parent directory
-2. We are going to test an object called <em>Game</em>
-3. This test case is called <em>requires an answer</em>
-4. <strong>expect</strong> warns RSpec that <em>Game.new</em> will throw an Exception
-5. We expect this exception to be an <em>ArgumentError</em>.</p>
+<p>This file tells RSpec</p>
+
+<ol>
+<li>Load a Ruby object called <em>game</em> from the parent directory</li>
+<li>We are going to test an object called <em>Game</em></li>
+<li>This test case is called <em>requires an answer</em></li>
+<li><strong>expect</strong> warns RSpec that <em>Game.new</em> will throw an Exception</li>
+<li>We expect this exception to be an <em>ArgumentError</em>.</li>
+</ol>
+
 
 <h3>Run them</h3>
 
@@ -76,11 +319,15 @@ end</code></pre>
 
 <h3>Write some code</h3>
 
-<p>You&rsquo;re on your own here. Read up on the Mastermind rules on Wikipedia, then code:
-1. Write a failing test
-2. Write the minimal amount of code to fix the test
-3. Goto 1
-4. Refactor to clean up as necessary</p>
+<p>You&rsquo;re on your own here. Read up on the Mastermind rules on Wikipedia, then code:</p>
+
+<ol>
+<li>Write a failing test</li>
+<li>Write the minimal amount of code to fix the test</li>
+<li>Goto 1</li>
+<li>Refactor to clean up as necessary</li>
+</ol>
+
 
 <h2>So, you&rsquo;re done</h2>
 
@@ -137,10 +384,14 @@ task :default =&gt; :spec</code></pre>
 </div>
 
 
-<p>This does the following:
-1. Tell Rake we want to use rspec
-2. Creates an RSpec task, naming it :spec
-3. Tells Rake that the default task is our :spec task.</p>
+<p>This does the following:</p>
+
+<ol>
+<li>Tell Rake we want to use rspec</li>
+<li>Creates an RSpec task, naming it :spec</li>
+<li>Tells Rake that the default task is our :spec task.</li>
+</ol>
+
 
 <p>Create and save this file in the project&rsquo;s directory, and run the following:</p>
 

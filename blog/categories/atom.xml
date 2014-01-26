@@ -4,7 +4,7 @@
   <title><![CDATA[Category:  | Tom van Ommeren's blog]]></title>
   <link href="http://tomv564.github.io/blog/categories//atom.xml" rel="self"/>
   <link href="http://tomv564.github.io/"/>
-  <updated>2014-01-25T14:16:30+01:00</updated>
+  <updated>2014-01-26T17:17:05+01:00</updated>
   <id>http://tomv564.github.io/</id>
   <author>
     <name><![CDATA[Tom van Ommeren]]></name>
@@ -20,17 +20,14 @@
     <id>http://tomv564.github.io/blog/2013/12/14/ruby-rspec-and-git-a-guessing-game</id>
     <content type="html"><![CDATA[<p>Let&rsquo;s make a game. Better yet, let&rsquo;s copy one. Let&rsquo;s implement <a href="http://en.wikipedia.org/wiki/Mastermind_(board_game">MasterMind</a> in Ruby.</p>
 
-<p>The living project for this series is on <a href="https://github.com/tomv564/mastermind">my GitHub</a></p>
+<p>The living project for this article is on <a href="https://github.com/tomv564/mastermind">GitHub</a></p>
 
 <h3>Prep</h3>
 
 <p>First, set up a ruby on your machine using <a href="http://railsapps.github.io/installrubyonrails-mac.html">this guide</a> about RVM.</p>
 
-<p>You&rsquo;ll also want an editor, I&rsquo;m trying <a href="http://www.sublimetext.com">Sublime Text</a>.</p>
-
-<p>Create an empty class, we&rsquo;ll call it game.rb.</p>
-
-<p>Before writing any code, we&rsquo;re going to write a test. This is called Test Driven Development, and it helps you write lean, reliable code. I used RSpec, but you might consider TestUnit instead for such a simple app.</p>
+<p>Create an empty class, we&rsquo;ll call it game.rb.
+For Ruby, RSpec and TestUnit are popular. We&rsquo;ll use RSpec for now:</p>
 
 <p>First, install the rspec gem:</p>
 
@@ -63,12 +60,16 @@ end
 </div>
 </p>
 
-<p>This file tells RSpec
-1. Load a Ruby object called <em>game</em> from the parent directory
-2. We are going to test an object called <em>Game</em>
-3. This test case is called <em>requires an answer</em>
-4. <strong>expect</strong> warns RSpec that <em>Game.new</em> will throw an Exception
-5. We expect this exception to be an <em>ArgumentError</em>.</p>
+<p>This file tells RSpec</p>
+
+<ol>
+<li>Load a Ruby object called <em>game</em> from the parent directory</li>
+<li>We are going to test an object called <em>Game</em></li>
+<li>This test case is called <em>requires an answer</em></li>
+<li><strong>expect</strong> warns RSpec that <em>Game.new</em> will throw an Exception</li>
+<li>We expect this exception to be an <em>ArgumentError</em>.</li>
+</ol>
+
 
 <h3>Run them</h3>
 
@@ -83,11 +84,15 @@ end
 
 <h3>Write some code</h3>
 
-<p>You&rsquo;re on your own here. Read up on the Mastermind rules on Wikipedia, then code:
-1. Write a failing test
-2. Write the minimal amount of code to fix the test
-3. Goto 1
-4. Refactor to clean up as necessary</p>
+<p>You&rsquo;re on your own here. Read up on the Mastermind rules on Wikipedia, then code:</p>
+
+<ol>
+<li>Write a failing test</li>
+<li>Write the minimal amount of code to fix the test</li>
+<li>Goto 1</li>
+<li>Refactor to clean up as necessary</li>
+</ol>
+
 
 <h2>So, you&rsquo;re done</h2>
 
@@ -148,10 +153,14 @@ git push origin master</code></pre>
 </div>
 </p>
 
-<p>This does the following:
-1. Tell Rake we want to use rspec
-2. Creates an RSpec task, naming it :spec
-3. Tells Rake that the default task is our :spec task.</p>
+<p>This does the following:</p>
+
+<ol>
+<li>Tell Rake we want to use rspec</li>
+<li>Creates an RSpec task, naming it :spec</li>
+<li>Tells Rake that the default task is our :spec task.</li>
+</ol>
+
 
 <p>Create and save this file in the project&rsquo;s directory, and run the following:</p>
 
