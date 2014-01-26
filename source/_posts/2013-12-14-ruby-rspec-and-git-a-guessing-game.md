@@ -8,17 +8,14 @@ tags: []
 
 Let's make a game. Better yet, let's copy one. Let's implement [MasterMind](http://en.wikipedia.org/wiki/Mastermind_(board_game) in Ruby.
 
-The living project for this series is on [my GitHub](https://github.com/tomv564/mastermind)
+The living project for this article is on [GitHub](https://github.com/tomv564/mastermind)
 
 ### Prep
 
 First, set up a ruby on your machine using [this guide](http://railsapps.github.io/installrubyonrails-mac.html) about RVM.
 
-You'll also want an editor, I'm trying [Sublime Text](http://www.sublimetext.com).
-
 Create an empty class, we'll call it game.rb. 
-
-Before writing any code, we're going to write a test. This is called Test Driven Development, and it helps you write lean, reliable code. I used RSpec, but you might consider TestUnit instead for such a simple app.
+For Ruby, RSpec and TestUnit are popular. We'll use RSpec for now:
 
 First, install the rspec gem:
 
@@ -45,6 +42,7 @@ end
 {% endhighlight %}
 
 This file tells RSpec
+
 1. Load a Ruby object called *game* from the parent directory
 2. We are going to test an object called *Game*
 3. This test case is called *requires an answer*
@@ -64,6 +62,7 @@ You should see 1 failed test.
 ### Write some code
 
 You're on your own here. Read up on the Mastermind rules on Wikipedia, then code:
+
 1. Write a failing test
 2. Write the minimal amount of code to fix the test
 3. Goto 1
@@ -117,6 +116,7 @@ task :default => :spec
 {% endhighlight %}
 
 This does the following:
+
 1. Tell Rake we want to use rspec
 2. Creates an RSpec task, naming it :spec
 3. Tells Rake that the default task is our :spec task.
