@@ -4,7 +4,7 @@
   <title><![CDATA[Tom van Ommeren's blog]]></title>
   <link href="http://tomv564.github.io/atom.xml" rel="self"/>
   <link href="http://tomv564.github.io/"/>
-  <updated>2014-04-01T21:05:30+02:00</updated>
+  <updated>2014-04-01T21:11:50+02:00</updated>
   <id>http://tomv564.github.io/</id>
   <author>
     <name><![CDATA[Tom van Ommeren]]></name>
@@ -28,32 +28,42 @@ Currently, we&rsquo;re using WinMerge or even Filezilla to push invidual files a
 
 <p>On Windows,</p>
 
-<ol>
+<ul>
 <li>Follow the <a href="http://bonobogitserver.com/install/">installation instructions</a> to install Bonobo Git Server</li>
-<li>Create a repository for yourapp</li>
-<li>Create a web application for yourapp, host it under eg. <strong>c:\inetpub\yourapp</strong></li>
+<li>Create a repository for yourapp in Bonobo</li>
+<li>Create a web application in IIS for yourapp, under eg. <strong>c:\inetpub\yourapp</strong></li>
 <li>Grant the <strong>IIS_IUSRS</strong> group write permissions to this directory.</li>
-<li><p>Locate your repository in Bonobo&rsquo;s <strong>App_Data</strong> folder and add the following in <strong>hooks\post-receive</strong></p>
+<li>Locate your repository in Bonobo&rsquo;s <strong>App_Data</strong> folder and add the following in <strong>hooks\post-receive</strong></li>
+</ul>
 
-<p> <code>
- #!/bin/sh
- git checkout -f  
-</code></p></li>
-<li><p>Also edit the config of the repository, making sure at least the following settings are present:</p>
 
-<p> <code>
- [core]
-   bare = false
-   worktree = /inetpub/yourapp
- [recieve]
-   denycurrentworktree = ignore
-</code></p></li>
-<li><p>Finally, add the remote to your local git repository:</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/sh
+</span><span class='line'>git checkout -f  </span></code></pre></td></tr></table></div></figure>
 
-<p> <code>git remote add http://admin@mywindowsserver/yourapp.git</code></p></li>
-<li><p>You&rsquo;re good to go!</p></li>
-</ol>
 
+<p>Also edit the config of the repository, making sure at least the following settings are present:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[core]
+</span><span class='line'>  bare = false
+</span><span class='line'>  worktree = /inetpub/yourapp
+</span><span class='line'>[recieve]
+</span><span class='line'>  denycurrentworktree = ignore</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, add the remote to your local git repository:</p>
+
+<p><code>git remote add myserver http://admin@mywindowsserver/yourapp.git</code></p>
+
+<p>You&rsquo;re good to go:</p>
+
+<p><code>git push myserver</code></p>
 ]]></content>
   </entry>
   
