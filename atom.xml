@@ -4,7 +4,7 @@
   <title><![CDATA[Tom van Ommeren's blog]]></title>
   <link href="http://tomv564.github.io/atom.xml" rel="self"/>
   <link href="http://tomv564.github.io/"/>
-  <updated>2014-04-01T20:55:27+02:00</updated>
+  <updated>2014-04-01T21:05:30+02:00</updated>
   <id>http://tomv564.github.io/</id>
   <author>
     <name><![CDATA[Tom van Ommeren]]></name>
@@ -19,53 +19,41 @@
     <updated>2014-03-28T18:49:41+01:00</updated>
     <id>http://tomv564.github.io/blog/2014/03/28/git-push-deployment-on-iis</id>
     <content type="html"><![CDATA[<p>Now that I&rsquo;m not just slinging C# all day, there are some interesting new problems.
-Like git repositories full of PHP that need to be deployed to Windows and Ubuntu boxes on a whim.
+Like PHP hotfixes that need to be deployed to Windows and Ubuntu boxes on a whim.
 Currently, we&rsquo;re using WinMerge or even Filezilla to push invidual files across, and I yearn to be able to just do this:</p>
 
 <p><code>git push live</code></p>
 
-<p>On the Ubuntu servers, [this is easy]](<a href="http://mikeeverhart.net/git/using-git-to-deploy-code/">http://mikeeverhart.net/git/using-git-to-deploy-code/</a>)</p>
+<p>On the Ubuntu servers, <a href="http://mikeeverhart.net/git/using-git-to-deploy-code/">this is easy</a></p>
 
 <p>On Windows,</p>
 
 <ol>
 <li>Follow the <a href="http://bonobogitserver.com/install/">installation instructions</a> to install Bonobo Git Server</li>
 <li>Create a repository for yourapp</li>
-<li>Create a web application for yourapp, host it under eg. <code>c:\inetpub\yourapp</code></li>
-<li>Grant the <em>IIS_IUSRS</em> group write permissions to this directory.</li>
-<li>Locate your repository in Bonobo&rsquo;s App_Data folder and add the following in hooks\post-receive</li>
+<li>Create a web application for yourapp, host it under eg. <strong>c:\inetpub\yourapp</strong></li>
+<li>Grant the <strong>IIS_IUSRS</strong> group write permissions to this directory.</li>
+<li><p>Locate your repository in Bonobo&rsquo;s <strong>App_Data</strong> folder and add the following in <strong>hooks\post-receive</strong></p>
+
+<p> <code>
+ #!/bin/sh
+ git checkout -f  
+</code></p></li>
+<li><p>Also edit the config of the repository, making sure at least the following settings are present:</p>
+
+<p> <code>
+ [core]
+   bare = false
+   worktree = /inetpub/yourapp
+ [recieve]
+   denycurrentworktree = ignore
+</code></p></li>
+<li><p>Finally, add the remote to your local git repository:</p>
+
+<p> <code>git remote add http://admin@mywindowsserver/yourapp.git</code></p></li>
+<li><p>You&rsquo;re good to go!</p></li>
 </ol>
 
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/sh
-</span><span class='line'>git checkout -f  </span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>Also edit the config of the repository</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[core]
-</span><span class='line'>  bare = false
-</span><span class='line'>  worktree = /inetpub/yourapp
-</span><span class='line'>[recieve]
-</span><span class='line'>  denycurrentworktree = ignore</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>Finally, add the remote to your local git repository:</li>
-</ol>
-
-
-<p><code>git remote add http://admin@mywindowsserver/yourapp.git</code></p>
 ]]></content>
   </entry>
   
