@@ -112,7 +112,7 @@ Currently, we&rsquo;re using WinMerge or even Filezilla to push invidual files a
 
 <p><code>git push live</code></p>
 
-<p>On the Ubuntu servers, this is easy: Try <a href="http://mikeeverhart.net/git/using-git-to-deploy-code/">this guide</a></p>
+<p>On the Ubuntu servers, [this is easy]](<a href="http://mikeeverhart.net/git/using-git-to-deploy-code/">http://mikeeverhart.net/git/using-git-to-deploy-code/</a>)</p>
 
 <p>On Windows,</p>
 
@@ -123,21 +123,21 @@ Currently, we&rsquo;re using WinMerge or even Filezilla to push invidual files a
 <li>Grant the <em>IIS_IUSRS</em> group write permissions to this directory.</li>
 <li><p>Locate your repository in Bonobo&rsquo;s App_Data folder and add the following in hooks\post-receive</p>
 
-<p>&#8220;`</p>
-
-<h1>!/bin/sh</h1>
-
-<p>git checkout -f<br/>
-&#8220;`</p></li>
+<pre><code> #!/bin/sh
+ git checkout -f  
+</code></pre></li>
 <li><p>Also edit the config of the repository</p>
 
-<p><code>
-[core]
+<pre><code> [core]
    bare = false
    worktree = /inetpub/yourapp
-[recieve]
+ [recieve]
    denycurrentworktree = ignore
-</code></p></li>
+</code></pre></li>
+<li><p>Finally, add the remote to your local git repository:</p>
+
+<pre><code> git remote add http://admin@mywindowsserver/yourapp.git
+</code></pre></li>
 </ol>
 
 </div>

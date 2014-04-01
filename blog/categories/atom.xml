@@ -4,7 +4,7 @@
   <title><![CDATA[Category:  | Tom van Ommeren's blog]]></title>
   <link href="http://tomv564.github.io/blog/categories//atom.xml" rel="self"/>
   <link href="http://tomv564.github.io/"/>
-  <updated>2014-04-01T20:29:21+02:00</updated>
+  <updated>2014-04-01T20:49:39+02:00</updated>
   <id>http://tomv564.github.io/</id>
   <author>
     <name><![CDATA[Tom van Ommeren]]></name>
@@ -31,9 +31,10 @@ For Ruby, RSpec and TestUnit are popular. We&rsquo;ll use RSpec for now:</p>
 
 <p>First, install the rspec gem:</p>
 
-<p>{% highlight bash %}
-gem install rspec
-{% endhighlight %}</p>
+<p><div>
+  <pre><code class='bash'>gem install rspec</code></pre>
+</div>
+</p>
 
 <p>Rspec seems happiest when you put all the tests in a spec folder, so let&rsquo;s go ahead create our test file in <strong>spec/game_spec.rb</strong></p>
 
@@ -41,20 +42,23 @@ gem install rspec
 
 <p>Here is our first test scenario:</p>
 
-<p>{% highlight ruby %}</p>
+<p><div>
+  <pre><code class='ruby'>&lt;/p&gt;
 
-<p>require_relative &lsquo;../game&rsquo;</p>
+&lt;p&gt;require_relative &amp;lsquo;../game&amp;rsquo;&lt;/p&gt;
 
-<p>describe Game do</p>
+&lt;p&gt;describe Game do&lt;/p&gt;
 
-<pre><code>it "requires an answer" do
+&lt;pre&gt;&lt;code&gt;it &quot;requires an answer&quot; do
     expect{Game.new}.to raise_error(ArgumentError)
 end     
-</code></pre>
+&lt;/code&gt;&lt;/pre&gt;
 
-<p>end</p>
+&lt;p&gt;end&lt;/p&gt;
 
-<p>{% endhighlight %}</p>
+&lt;p&gt;</code></pre>
+</div>
+</p>
 
 <p>This file tells RSpec</p>
 
@@ -71,9 +75,10 @@ end
 
 <p>As long as all your spec files live in a spec directory, you can simply type the following your project directory:</p>
 
-<p>{% highlight bash %}
-rspec
-{% endhighlight %}</p>
+<p><div>
+  <pre><code class='bash'>rspec</code></pre>
+</div>
+</p>
 
 <p>You should see 1 failed test.</p>
 
@@ -97,10 +102,11 @@ rspec
 
 <p>First, convert your project to a local git repository</p>
 
-<p>{% highlight bash %}
-git add .
-git commmit -m &lsquo;initial commit&rsquo;
-{% endhighlight %}</p>
+<p><div>
+  <pre><code class='bash'>git add .
+git commmit -m &amp;lsquo;initial commit&amp;rsquo;</code></pre>
+</div>
+</p>
 
 <h3>Push it to github</h3>
 
@@ -110,19 +116,21 @@ git commmit -m &lsquo;initial commit&rsquo;
 </ol>
 
 
-<p>{% highlight bash %}
-git remote add origin <a href="https://github.com/user/repo.git">https://github.com/user/repo.git</a> # replace user and repo with your own repository details
-{% endhighlight %}</p>
+<p><div>
+  <pre><code class='bash'>git remote add origin &lt;a href=&quot;https://github.com/user/repo.git&quot;&gt;https://github.com/user/repo.git&lt;/a&gt; # replace user and repo with your own repository details</code></pre>
+</div>
+</p>
 
 <ol>
 <li>Push-pull to sync</li>
 </ol>
 
 
-<p>{% highlight bash %}
-git pull origin master
-git push origin master
-{% endhighlight %}</p>
+<p><div>
+  <pre><code class='bash'>git pull origin master
+git push origin master</code></pre>
+</div>
+</p>
 
 <h2>Automating the tests</h2>
 
@@ -132,15 +140,18 @@ git push origin master
 
 <p>We need a way to tell a 3rd party how to run the tests on our project. In Ruby, this is called the <strong>Rakefile</strong>:</p>
 
-<p>{% highlight ruby %}</p>
+<p><div>
+  <pre><code class='ruby'>&lt;/p&gt;
 
-<p>require &lsquo;rspec/core/rake_task&rsquo;</p>
+&lt;p&gt;require &amp;lsquo;rspec/core/rake_task&amp;rsquo;&lt;/p&gt;
 
-<p>RSpec::Core::RakeTask.new(:spec)</p>
+&lt;p&gt;RSpec::Core::RakeTask.new(:spec)&lt;/p&gt;
 
-<p>task :default => :spec</p>
+&lt;p&gt;task :default =&gt; :spec&lt;/p&gt;
 
-<p>{% endhighlight %}</p>
+&lt;p&gt;</code></pre>
+</div>
+</p>
 
 <p>This does the following:</p>
 
@@ -153,9 +164,10 @@ git push origin master
 
 <p>Create and save this file in the project&rsquo;s directory, and run the following:</p>
 
-<p>{% highlight bash %}
-rake
-{% endhighlight %}</p>
+<p><div>
+  <pre><code class='bash'>rake</code></pre>
+</div>
+</p>
 
 <p>You can see that rake starts up RSpec, the output should be the same as running rspec.</p>
 
@@ -165,20 +177,22 @@ rake
 
 <h4>.travis.yml</h4>
 
-<p>{% highlight ruby %}
-language: ruby
+<p><div>
+  <pre><code class='ruby'>language: ruby
 rvm:
-  &ndash; 2.0.0
-{% endhighlight %}</p>
+  &amp;ndash; 2.0.0</code></pre>
+</div>
+</p>
 
 <p>This file tells Travis that we are a ruby project, and we want Ruby 2.0.0</p>
 
 <h4>Gemfile</h4>
 
-<p>{% highlight ruby %}
-source &lsquo;<a href="https://rubygems.org">https://rubygems.org</a>&rsquo;
-gem &ldquo;rspec&rdquo;    , &ldquo;~> 2.14.1&rdquo;
-{% endhighlight %}</p>
+<p><div>
+  <pre><code class='ruby'>source &amp;lsquo;&lt;a href=&quot;https://rubygems.org&quot;&gt;https://rubygems.org&lt;/a&gt;&amp;rsquo;
+gem &amp;ldquo;rspec&amp;rdquo;    , &amp;ldquo;~&gt; 2.14.1&amp;rdquo;</code></pre>
+</div>
+</p>
 
 <p>This file tells Travis that we want to use a recent version of RSpec.
 Create these two files for now, we will send them to GitHub after the next step.</p>
