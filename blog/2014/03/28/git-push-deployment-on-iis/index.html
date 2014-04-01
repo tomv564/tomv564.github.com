@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category:  - Tom van Ommeren's blog</title>
+  <title>Git push deployment on IIS - Tom van Ommeren's blog</title>
   <meta name="author" content="Tom van Ommeren">
 
   
-  <meta name="description" content="Category: ">
+  <meta name="description" content="Now that I&rsquo;m not just slinging C# all day, there are some interesting new problems.
+Like git repositories full of PHP that need to be deployed &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://tomv564.github.ioblog/categories/">
+  <link rel="canonical" href="http://tomv564.github.io/blog/2014/03/28/git-push-deployment-on-iis/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -78,35 +79,111 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category:</h1>
+    
+      <h1 class="entry-title">Git Push Deployment on IIS</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-28T18:49:41+01:00" pubdate data-updated="true">Mar 28<span>th</span>, 2014</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Now that I&rsquo;m not just slinging C# all day, there are some interesting new problems.
+Like git repositories full of PHP that need to be deployed to Windows and Ubuntu boxes on a whim.
+Currently, we&rsquo;re using WinMerge or even Filezilla to push invidual files across, and I yearn to be able to just do this:</p>
 
-  
-  <h2>2013</h2>
+<p><code>git push live</code></p>
 
-<article>
-  
-<h1><a href="/blog/2013/12/14/ruby-rspec-and-git-a-guessing-game/">Ruby, rspec and git, a guessing game</a></h1>
-<time datetime="2013-12-14T00:00:00+01:00" pubdate><span class='month'>Dec</span> <span class='day'>14</span> <span class='year'>2013</span></time>
+<p>On the Ubuntu servers, this is easy: Try <a href="http://mikeeverhart.net/git/using-git-to-deploy-code/">this guide</a></p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories//'></a></span>
-</footer>
+<p>On Windows,</p>
 
+<ol>
+<li>Follow the <a href="http://bonobogitserver.com/install/">installation instructions</a> to install Bonobo Git Server</li>
+<li>Create a repository for yourapp</li>
+<li>Create a web application for yourapp, host it under eg. <code>c:\inetpub\yourapp</code></li>
+<li>Grant the <em>IIS_IUSRS</em> group write permissions to this directory.</li>
+<li><p>Locate your repository in Bonobo&rsquo;s App_Data folder and add the following in hooks\post-receive</p>
 
-</article>
+<p>&#8220;`</p>
+
+<h1>!/bin/sh</h1>
+
+<p>git checkout -f<br/>
+&#8220;`</p></li>
+<li><p>Also edit the config of the repository</p>
+
+<p><code>
+[core]
+   bare = false
+   worktree = /inetpub/yourapp
+[recieve]
+   denycurrentworktree = ignore
+</code></p></li>
+</ol>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Tom van Ommeren</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-28T18:49:41+01:00" pubdate data-updated="true">Mar 28<span>th</span>, 2014</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tomv564.github.io/blog/2014/03/28/git-push-deployment-on-iis/" data-via="tomvanommeren" data-counturl="http://tomv564.github.io/blog/2014/03/28/git-push-deployment-on-iis/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/01/26/mastermind-part-3-a-web-app/" title="Previous Post: MasterMind Part 3: A web app">&laquo; MasterMind Part 3: A web app</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>

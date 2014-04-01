@@ -4,7 +4,7 @@
   <title><![CDATA[Tom van Ommeren's blog]]></title>
   <link href="http://tomv564.github.io/atom.xml" rel="self"/>
   <link href="http://tomv564.github.io/"/>
-  <updated>2014-01-26T18:55:12+01:00</updated>
+  <updated>2014-04-01T20:18:51+02:00</updated>
   <id>http://tomv564.github.io/</id>
   <author>
     <name><![CDATA[Tom van Ommeren]]></name>
@@ -12,6 +12,48 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git push deployment on IIS]]></title>
+    <link href="http://tomv564.github.io/blog/2014/03/28/git-push-deployment-on-iis/"/>
+    <updated>2014-03-28T18:49:41+01:00</updated>
+    <id>http://tomv564.github.io/blog/2014/03/28/git-push-deployment-on-iis</id>
+    <content type="html"><![CDATA[<p>Now that I&rsquo;m not just slinging C# all day, there are some interesting new problems.
+Like git repositories full of PHP that need to be deployed to Windows and Ubuntu boxes on a whim.
+Currently, we&rsquo;re using WinMerge or even Filezilla to push invidual files across, and I yearn to be able to just do this:</p>
+
+<p><code>git push live</code></p>
+
+<p>On the Ubuntu servers, this is easy: Try <a href="http://mikeeverhart.net/git/using-git-to-deploy-code/">this guide</a></p>
+
+<p>On Windows,</p>
+
+<ol>
+<li>Follow the <a href="http://bonobogitserver.com/install/">installation instructions</a> to install Bonobo Git Server</li>
+<li>Create a repository for yourapp</li>
+<li>Create a web application for yourapp, host it under eg. <code>c:\inetpub\yourapp</code></li>
+<li>Grant the <em>IIS_IUSRS</em> group write permissions to this directory.</li>
+<li><p>Locate your repository in Bonobo&rsquo;s App_Data folder and add the following in hooks\post-receive</p>
+
+<p>&#8220;`</p>
+
+<h1>!/bin/sh</h1>
+
+<p>git checkout -f<br/>
+&#8220;`</p></li>
+<li><p>Also edit the config of the repository</p>
+
+<p><code>
+[core]
+   bare = false
+   worktree = /inetpub/yourapp
+[recieve]
+   denycurrentworktree = ignore
+</code></p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MasterMind Part 3: A web app]]></title>
