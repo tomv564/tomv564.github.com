@@ -108,7 +108,7 @@
 	"buffers":
 	[
 		{
-			"file": "/Users/tomv/Projects/Personal/tomv564.github.com/source/_posts/2014-03-28-git-push-deployment-on-iis.markdown",
+			"file": "source/_posts/2014-03-28-git-push-deployment-on-iis.markdown",
 			"settings":
 			{
 				"buffer_size": 1258,
@@ -116,7 +116,7 @@
 			}
 		},
 		{
-			"file": "/Users/tomv/Projects/Personal/tomv564.github.com/source/_posts/2014-01-26-mastermind-part-3-a-web-app.markdown",
+			"file": "source/_posts/2014-01-26-mastermind-part-3-a-web-app.markdown",
 			"settings":
 			{
 				"buffer_size": 4852,
@@ -299,7 +299,7 @@
 			[
 				{
 					"buffer": 0,
-					"file": "/Users/tomv/Projects/Personal/tomv564.github.com/source/_posts/2014-03-28-git-push-deployment-on-iis.markdown",
+					"file": "source/_posts/2014-03-28-git-push-deployment-on-iis.markdown",
 					"semi_transient": false,
 					"settings":
 					{
@@ -327,7 +327,7 @@
 				},
 				{
 					"buffer": 1,
-					"file": "/Users/tomv/Projects/Personal/tomv564.github.com/source/_posts/2014-01-26-mastermind-part-3-a-web-app.markdown",
+					"file": "source/_posts/2014-01-26-mastermind-part-3-a-web-app.markdown",
 					"semi_transient": true,
 					"settings":
 					{
