@@ -111,7 +111,7 @@
 			"file": "source/_posts/2014-03-28-git-push-deployment-on-iis.markdown",
 			"settings":
 			{
-				"buffer_size": 1258,
+				"buffer_size": 1347,
 				"line_ending": "Unix"
 			}
 		},
@@ -268,6 +268,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"that",
 			"about",
 			"true",
 			";\n",
@@ -303,15 +304,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1258,
+						"buffer_size": 1347,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1032,
-								1032
+								738,
+								738
 							]
 						],
 						"settings":
@@ -319,7 +320,7 @@
 							"syntax": "Packages/Markdown/Markdown.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 4.0,
+						"translation.y": 94.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
