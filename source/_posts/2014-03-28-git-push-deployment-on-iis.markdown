@@ -4,6 +4,7 @@ title: "Git push deployment on IIS"
 date: 2014-03-28 18:49:41 +0100
 comments: true
 categories: 
+
 ---
 
 Now that I'm not just slinging C# all day, there are some interesting new problems. 
@@ -39,9 +40,9 @@ Also edit the config of the repository, making sure at least the following setti
 
 Finally, add the remote to your local git repository: 
 
-` git remote add myserver http://admin@mywindowsserver/yourapp.git `
+` git remote add yourserver http://admin@yourwindowsserver/yourapp.git `
 
 You're good to go:
 
-` git push myserver `
+` git push yourserver `
 
