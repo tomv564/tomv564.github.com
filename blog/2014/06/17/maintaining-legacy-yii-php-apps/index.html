@@ -3,11 +3,11 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Blog Archive - Tom van Ommeren's blog</title>
+	<title>Maintaining legacy Yii PHP apps - Tom van Ommeren's blog</title>
 	<meta name="author" content="Tom van Ommeren">
 
 	
-	<meta name="description" content=" 2014 Maintaining legacy Yii PHP apps Jun 17 ">
+	<meta name="description" content="Yii is a sort of Ruby on Rails clone. You get some of the good features (migrations for example), but not the amazing language or community. The &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -77,120 +77,52 @@
 	
 		
 	
-	<div id="content" class="inner"><article class="page">
-    
-    <h1 class="title">Blog Archive</h1>
-    
-    <div class="entry-content"><div id="blog-archives">
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Maintaining Legacy Yii PHP Apps</h2>
+	<div class="entry-content"><p>Yii is a sort of Ruby on Rails clone. You get some of the good features (migrations for example), but not the amazing language or community.</p>
+
+<p>The application architecture is probably good enough for simple forms-to-mysql webapps. Unfortunately the framework provides little guidance once complexity grows, so be prepared for monster models and controllers. Tooling isn&rsquo;t great either, so soon I found myself littering var_dumps all over the code and F5-ing in the browser like it&rsquo;s 1998.</p>
+
+<h3>So what can you do?</h3>
+
+<p><strong>Automate deployment</strong> because it&rsquo;s so easy with PHP. We stopped working on the server and now push to a bare git repository with a post-receive hook to checkout and run migrations. If you deploy PHP applications to IIS, you can use a similar setup <a href="/blog/2014/03/28/git-push-deployment-on-iis/">I wrote about before</a>.</p>
+
+<p><strong>Set up a build server</strong>. I like TeamCity with the PHP meta-runners, but Travis CI is an option if your source is public or you have money.
+Even if there are no tests, you can run PHP lint on the whole directory. You can catch some real stupid errors this way.</p>
+
+<p><strong>Make unit testing cheap</strong>. Document how to set up the right PHPUnit (<a href="https://github.com/yiisoft/yii/issues/1563">YII is picky</a>), and make it only a keystroke/click away. (Psst, using Sublime Text? I have a <a href="https://github.com/tomv564/SimplePHPUnit">Yii-friendly version of the SimplePHPUnit plugin</a>)</p>
+
+<p><strong>Finally, run the tests on the build server</strong>.
+If your migration history is incomplete like ours was, you may also have to set up a set up a minimal database build. We keep a mysqldump the structure of a recent database on the build server. Every build this database is restored, followed by a <code>yiic migrate</code>.</p>
+
+<h3>What does it get you?</h3>
+
+<p>Having this set up has not allowed significant refactorings or converted us to TDD. But the last few months I&rsquo;ve noticed some changes of habit:</p>
+
+<p>It&rsquo;s more worthwhile to fix little bugs and annoyances because deployments are safe and fast. As a bonus, the fixes also always make it into version control.</p>
+
+<p>We&rsquo;ve also had some valuable fixes sitting in still-dodgy code. After writing some tests, I felt safe pushing it live. Any new bugs would be triaged quickly because <em>writing more tests was now cheap.</em></p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
 
 
 
   
-  <h2>2014</h2>
-
-<article>
-  
 
 
-<article>
-	<h2 class="title"><a href="/blog/2014/06/17/maintaining-legacy-yii-php-apps/">Maintaining legacy Yii PHP apps</a></h2>
-	<div class="meta">
-		<div class="date">Jun 17</div>
-		<div class="tags">
+<time datetime="2014-06-17T00:00:41+02:00" pubdate data-updated="true">Jun 17<span>th</span>, 2014</time></div>
+	<div class="tags">
 
 </div>
-	    
-	</div>
-</article>
 	
-</article>
-
-
-
-<article>
-  
-
-
-<article>
-	<h2 class="title"><a href="/blog/2014/03/28/git-push-deployment-on-iis/">Git push deployment on IIS</a></h2>
-	<div class="meta">
-		<div class="date">Mar 28</div>
-		<div class="tags">
-
-</div>
-	    
-	</div>
-</article>
-	
-</article>
-
-
-
-<article>
-  
-
-
-<article>
-	<h2 class="title"><a href="/blog/2014/01/26/mastermind-part-3-a-web-app/">MasterMind Part 3: A web app</a></h2>
-	<div class="meta">
-		<div class="date">Jan 26</div>
-		<div class="tags">
-
-</div>
-	    
-	</div>
-</article>
-	
-</article>
-
-
-
-<article>
-  
-
-
-<article>
-	<h2 class="title"><a href="/blog/2014/01/26/mastermind-part-2-adding-a-front-end/">MasterMind Part 2: Adding a front end</a></h2>
-	<div class="meta">
-		<div class="date">Jan 26</div>
-		<div class="tags">
-
-</div>
-	    
-	</div>
-</article>
-	
-</article>
-
-
-
-  
-  <h2>2013</h2>
-
-<article>
-  
-
-
-<article>
-	<h2 class="title"><a href="/blog/2013/12/14/ruby-rspec-and-git-a-guessing-game/">Ruby, rspec and git, a guessing game</a></h2>
-	<div class="meta">
-		<div class="date">Dec 14</div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories//'></a>
-
-
-</div>
-	    
-	</div>
-</article>
-	
-	</section>
-	
-</article>
-
-</div>
 </div>
 </article>
 
@@ -205,7 +137,6 @@
 	</div>
 	
 </div>
-
 
 
 </div>

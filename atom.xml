@@ -4,7 +4,7 @@
   <title><![CDATA[Tom van Ommeren's blog]]></title>
   <link href="http://tomv564.github.io/atom.xml" rel="self"/>
   <link href="http://tomv564.github.io/"/>
-  <updated>2014-06-16T19:51:47+02:00</updated>
+  <updated>2014-06-17T00:09:23+02:00</updated>
   <id>http://tomv564.github.io/</id>
   <author>
     <name><![CDATA[Tom van Ommeren]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Maintaining legacy Yii PHP apps]]></title>
+    <link href="http://tomv564.github.io/blog/2014/06/17/maintaining-legacy-yii-php-apps/"/>
+    <updated>2014-06-17T00:00:41+02:00</updated>
+    <id>http://tomv564.github.io/blog/2014/06/17/maintaining-legacy-yii-php-apps</id>
+    <content type="html"><![CDATA[<p>Yii is a sort of Ruby on Rails clone. You get some of the good features (migrations for example), but not the amazing language or community.</p>
+
+<p>The application architecture is probably good enough for simple forms-to-mysql webapps. Unfortunately the framework provides little guidance once complexity grows, so be prepared for monster models and controllers. Tooling isn&rsquo;t great either, so soon I found myself littering var_dumps all over the code and F5-ing in the browser like it&rsquo;s 1998.</p>
+
+<h3>So what can you do?</h3>
+
+<p><strong>Automate deployment</strong> because it&rsquo;s so easy with PHP. We stopped working on the server and now push to a bare git repository with a post-receive hook to checkout and run migrations. If you deploy PHP applications to IIS, you can use a similar setup <a href="http://tomv564.github.io/blog/2014/03/28/git-push-deployment-on-iis/">I wrote about before</a>.</p>
+
+<p><strong>Set up a build server</strong>. I like TeamCity with the PHP meta-runners, but Travis CI is an option if your source is public or you have money.
+Even if there are no tests, you can run PHP lint on the whole directory. You can catch some real stupid errors this way.</p>
+
+<p><strong>Make unit testing cheap</strong>. Document how to set up the right PHPUnit (<a href="https://github.com/yiisoft/yii/issues/1563">YII is picky</a>), and make it only a keystroke/click away. (Psst, using Sublime Text? I have a <a href="https://github.com/tomv564/SimplePHPUnit">Yii-friendly version of the SimplePHPUnit plugin</a>)</p>
+
+<p><strong>Finally, run the tests on the build server</strong>.
+If your migration history is incomplete like ours was, you may also have to set up a set up a minimal database build. We keep a mysqldump the structure of a recent database on the build server. Every build this database is restored, followed by a <code>yiic migrate</code>.</p>
+
+<h3>What does it get you?</h3>
+
+<p>Having this set up has not allowed significant refactorings or converted us to TDD. But the last few months I&rsquo;ve noticed some changes of habit:</p>
+
+<p>It&rsquo;s more worthwhile to fix little bugs and annoyances because deployments are safe and fast. As a bonus, the fixes also always make it into version control.</p>
+
+<p>We&rsquo;ve also had some valuable fixes sitting in still-dodgy code. After writing some tests, I felt safe pushing it live. Any new bugs would be triaged quickly because <em>writing more tests was now cheap.</em></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git push deployment on IIS]]></title>
@@ -59,11 +90,11 @@ Currently, we&rsquo;re using WinMerge or even Filezilla to push invidual files a
 
 <p>Finally, add the remote to your local git repository:</p>
 
-<p><code>git remote add myserver http://admin@mywindowsserver/yourapp.git</code></p>
+<p><code>git remote add yourserver http://admin@yourwindowsserver/yourapp.git</code></p>
 
 <p>You&rsquo;re good to go:</p>
 
-<p><code>git push myserver</code></p>
+<p><code>git push yourserver</code></p>
 ]]></content>
   </entry>
   
