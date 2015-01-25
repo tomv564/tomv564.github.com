@@ -6,6 +6,7 @@ baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://tomv.io" # the base hostname & protocol for your site
 twitter_username: tom.vanommeren
 github_username:  tomv564
+google_analytics_tracking_id:  UA-7601332-2
 
 # Build settings
 markdown: kramdown
