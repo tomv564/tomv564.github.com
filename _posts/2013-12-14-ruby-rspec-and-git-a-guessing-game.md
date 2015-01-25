@@ -6,7 +6,7 @@ category: ""
 tags: []
 ---
 
-Let's make a game. Better yet, let's copy one. Let's implement [Mastermind](http://en.wikipedia.org/wiki/Mastermind_(board_game) in Ruby.
+Let's make a game. Better yet, let's copy one. Let's implement [Mastermind](http://en.wikipedia.org/wiki/Mastermind_(board_game)) in Ruby.
 
 The living project for this article is on [GitHub](https://github.com/tomv564/mastermind)
 
