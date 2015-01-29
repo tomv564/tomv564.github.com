@@ -4,4 +4,4 @@ title: About
 permalink: /about/
 ---
 
-I am Tom, great deleter of untested shitty code.
+I am Tom, great reinventor of wheels
