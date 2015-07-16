@@ -30,7 +30,7 @@ Sinatra expects all your HTML, CSS and javascript to live in a subfolder named *
 ### Create a controller.rb in the root to serve it all up
 
 
-``` ruby controller.rb
+{% highlight ruby %}
 
 require 'sinatra'
 require 'json'
@@ -41,7 +41,7 @@ get '/' do
 end
 
 
-```
+{% endhighlight %}
 
 And fire it up using
 
@@ -58,7 +58,7 @@ How do we keep the multiple games running on the server apart?
 
 Add the *securerandom* gem, and add a read-only id property on our Game object:
 
-``` ruby game.rb
+{% highlight ruby %}
 require 'securerandom'
 
   class Game
@@ -71,29 +71,30 @@ require 'securerandom'
       @id = SecureRandom.hex(4)
     end
 
-```
+{% endhighlight %}
+
 We need to store this game object between requests, and we're not going to use a database for this. Instead, we'll set up a hash in Sinatra's configuration when the app loads:
 
-``` ruby controller.rb
+{% highlight ruby %}
 require_relative 'game'
 require_relative 'generator'
 
 configure do
   set :games, Hash.new
 end
-```
+{% endhighlight %}
 
 In your app.js, your reset function should request a new game:
 
-``` javascript
+{% highlight javascript %}
 
 $.post('/game', onGameCreated);
 
-```
+{% endhighlight %}
 
 Your server creates, stores and returns the new game:
 
-``` ruby controller.rb
+{% highlight ruby %}
 
 post '/game' do
 	# create a new game
@@ -108,17 +109,17 @@ post '/game' do
 	game.id.to_json
 end
 
-```
+{% endhighlight %}
 
 Back on the client, your onGameCreated function should extract the id and store it for future requests
 
-``` javascript app.js
+{% highlight javascript %}
 var gameId;
 
 var onGameCreated = function(data) {
         gameId = data;
 }
-```
+{% endhighlight %}
 
 Restart your sinatra host, and you should see an AJAX request going out to your server as soon as the page hits your reset() method.
 
@@ -127,13 +128,13 @@ Restart your sinatra host, and you should see an AJAX request going out to your 
 
 Once the player has selected four colors I allow then to submit the guess. See here the use of gameId, and colors is passed as an array in the POST payload.
 
-``` javascript app.js
+{% highlight javascript %}
 $.post('/game/' + gameId + '/guesses', {'colors[]': colors}).done(onGuessAdded);
-```
+{% endhighlight %}
 
 Your web handler should look something like this:
 
-``` ruby controller.rb
+{% highlight ruby %}
 post '/game/:id/guesses' do
 
         # find the game
@@ -150,7 +151,7 @@ post '/game/:id/guesses' do
         content_type :json
         score.to_json
 end
-```
+{% endhighlight %}
 
 Things I think are great about this code:
 
@@ -167,18 +168,18 @@ Their [Getting Started](https://devcenter.heroku.com/articles/quickstart) page w
 
 Using their [instructions for Rack apps](https://devcenter.heroku.com/articles/rack) we will set up the Gemfile and config.ru in the root:
 
-``` ruby Gemfile
+{% highlight ruby %}
 source 'https://rubygems.org'
 gem "bundler"  , "~> 1.3.5"
 gem "rspec"    , "~> 2.14.1"
 gem "sinatra"
 gem "securerandom"
-```
+{% endhighlight %}
 
-``` ruby config.ru
+{% highlight ruby %}
 require './controller'
 run Sinatra::Application
-```
+{% endhighlight %}
 
 You should have run heroku login at this point, so we are ready to create and deploy the app using a git push:
 

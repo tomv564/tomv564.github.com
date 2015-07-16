@@ -1,10 +1,10 @@
 # Site settings
-title: tomv.io
+title: Tom van Ommeren
 email:
-description: > # this means to ignore newlines until "baseurl:"
+description: "International reinventor of wheels"
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://tomv.io" # the base hostname & protocol for your site
-twitter_username: tom.vanommeren
+twitter_username: tomvanommeren
 github_username:  tomv564
 google_analytics_tracking_id:  UA-7601332-2
 

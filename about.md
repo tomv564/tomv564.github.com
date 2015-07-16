@@ -4,4 +4,4 @@ title: About
 permalink: /about/
 ---
 
-I am Tom, great reinventor of wheels
+Passionate software developer and communicator with an eye for clarity, cleanliness and efficiency.
