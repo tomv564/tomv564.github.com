@@ -48,7 +48,8 @@ After installation, Sublime should prompt you to install the **tern** node packa
 
 In the root of your project create a **.tern-project** file with the following contents:
 
-``` javascript
+{% highlight javascript %}
+
 {
   "libs": [
     "browser"
@@ -60,9 +61,10 @@ In the root of your project create a **.tern-project** file with the following c
      "jasmine": {}
   }
 }
-```
 
-These settings are documented [here](http://ternjs.net/doc/manual.html#configuration), here is a list of built-in [libs](https://github.com/marijnh/tern/tree/master/defs) and [plugins](https://github.com/marijnh/tern/tree/master/plugins). 
+{% endhighlight %}
+
+These settings are documented [here](http://ternjs.net/doc/manual.html#configuration), here is a list of built-in [libs](https://github.com/marijnh/tern/tree/master/defs) and [plugins](https://github.com/marijnh/tern/tree/master/plugins).
 
 You should a list of es6 array functions after typing `[].` in a saved javascript file in your project:
 
@@ -78,9 +80,9 @@ The same transpilation will be necessary to run your jasmine tests. Install **ja
 
 In the project's **package.json**, add a `"test": "jasmine"` line under scripts.
 
-Finally, add a build system to Sublime with the following content. 
+Finally, add a build system to Sublime with the following content.
 
-``` yaml
+{% highlight yaml %}
 {
     "shell_cmd": "npm test",
     "working_dir": "${project_path}",
@@ -88,6 +90,6 @@ Finally, add a build system to Sublime with the following content.
     "file_regex": "^.+\\((.+):([0-9]+):([0-9]+)\\)$"
 }
 
-```
-  
+{% endhighlight %}
+
 You should now be able to run your tests with with `super+b` and navigate to errors with `F4`.
