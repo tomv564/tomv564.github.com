@@ -4,7 +4,7 @@ title: For hire
 permalink: /hireme/
 ---
 
-Available for work around **Uppsala, Sweden** or **remote** starting **August 2015**.
+**I am currently engaged full-time building live-front ends in the entertainment industry in Uppsala.**
 
 Jag talar engelska, holländska och svenska!
 

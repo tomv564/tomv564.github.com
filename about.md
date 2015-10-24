@@ -6,7 +6,7 @@ permalink: /about/
 
 ### Current mission
 
-Obtain gainful employment in technology in Uppsala/Stockholm region. Hone development skills through open source contributions. Understand Swedes and their funny language.
+Help teams deliver user-friendly, well-tested and performant functionality. Contribute to quality open-source tooling. Absorb Swedish culture and gain fluency in the Swedish language!
 
 ### Background
 
