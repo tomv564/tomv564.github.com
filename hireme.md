@@ -4,7 +4,7 @@ title: For hire
 permalink: /hireme/
 ---
 
-**I am currently engaged full-time building live-front ends in the entertainment industry in Uppsala.**
+**I am currently engaged full-time building live front-ends in the entertainment industry in Uppsala.**
 
 Jag talar engelska, holländska och svenska!
 
