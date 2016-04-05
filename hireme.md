@@ -1,6 +1,6 @@
 ---
 layout: page
-title: For hire
+not_a_title: For hire
 permalink: /hireme/
 ---
 

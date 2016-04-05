@@ -35,7 +35,7 @@ Also edit the config of the repository, making sure at least the following setti
   bare = false
   worktree = /inetpub/yourapp
 [recieve]
-  denycurrentworktree = ignore
+  denyCurrentBranch = ignore
 ```
 
 Finally, add the remote to your local git repository: 

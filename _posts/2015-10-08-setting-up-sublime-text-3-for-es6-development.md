@@ -46,6 +46,11 @@ Start by installing the **tern\_for\_sublime** package via Package Control.
 
 After installation, Sublime should prompt you to install the **tern** node package as well.
 
+If tern has issues launching npm or node on OS-X, it probably has not inherited your path properly. There are two options to fix this:
+
+* Start Sublime from the terminal using `subl`
+* Install the [FixMacPath](https://github.com/int3h/SublimeFixMacPath) package.
+
 In the root of your project create a **.tern-project** file with the following contents:
 
 {% highlight javascript %}
