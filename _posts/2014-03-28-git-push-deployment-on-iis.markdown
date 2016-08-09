@@ -34,7 +34,7 @@ Also edit the config of the repository, making sure at least the following setti
 [core]
   bare = false
   worktree = /inetpub/yourapp
-[recieve]
+[receive]
   denyCurrentBranch = ignore
 ```
 
