@@ -10,8 +10,8 @@ You need to manually set the syntax to `Javascript (Babel)` and choose **Syntax*
 
 The Typescript syntax from Microsoft unfortunately breaks the syntax-based *List symbols* (`cmd+r`) and *Jump to symbol* (`cmd+option+down`) commands. 
 
-![](/uploads/sublime-syntax-broken-definitions.png)
-![](/uploads/sublime-syntax-broken-list.png)
+![](/uploads/typescript-syntax-broken-definitions.png)
+![](/uploads/typescript-syntax-broken-list.png)
 
 
 [My fork](https://github.com/tomv564/TypeScript-TmLanguage) of the syntax fixes this issue, or you can install [Microsoft's syntax](https://github.com/Microsoft/TypeScript-TmLanguage) if it doesn't bother you.
